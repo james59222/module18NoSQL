@@ -1,10 +1,10 @@
-// ObjectId() method for converting studentId string into an ObjectId for querying database
+// ObjectId() method for converting thoughtId string into an ObjectId for querying database
 const { Thought, User } = require('../models');
 
 
 
 module.exports = {
-  // Get all students
+  // Get all thoughts
   async getThoughts(req, res) {
     try {
       const thoughts = await Thought.find();
@@ -15,14 +15,14 @@ module.exports = {
       return res.status(500).json(err);
     }
   },
-  // Get a single student
+  // Get a single thought
   async getSingleThought(req, res) {
     try {
       const thought = await Thought.findOne({ _id: req.params.thoughtId })
         .select('-__v')
 
       if (!thought) {
-        return res.status(404).json({ message: 'No student with that ID' });
+        return res.status(404).json({ message: 'No thought with that ID' });
       }
 
       res.json({
@@ -33,7 +33,7 @@ module.exports = {
       return res.status(500).json(err);
     }
   },
-  // create a new student
+  // create a new thought
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
@@ -42,7 +42,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Delete a student and remove them from the course
+  // Delete a thought and remove them from the course
   async deleteThought(req, res) {
     try {
       const thought = await Thought.findOneAndRemove({ _id: req.params.thoughtId });
@@ -60,7 +60,7 @@ module.exports = {
     }
   },
 
-  // Add an assignment to a student
+  // Add an reaction to a thought
   async addReaction(req, res) {
     try {
       console.log('You are adding an reaction');
@@ -82,7 +82,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Remove assignment from a student
+  // Remove reaction from a thought
   async removeReaction(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
